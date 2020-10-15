@@ -1,16 +1,18 @@
 import { Router } from "express";
-import User from "./app/models/User";
+import SessionController from "./app/controllers/SessionController";
+import UserController from "./app/controllers/UserController";
+import AuthMiddleware from "./app/middlewares/auth";
 
 const routes = new Router();
 
-routes.get('/create',async (req, res)=>{
-const user = await User.create({
-    name: 'lucas',
-    email: 'lucas@gmail.com',
-    password_hash:'123456',
-})
+routes.post('/users', UserController.store);
+routes.post('/sessions', SessionController.store);
 
-  return res.json(user);
-})
+//Todas as rotas abaixo desse middleware serão verificadas
+routes.use(AuthMiddleware);
+
+routes.put('/users', AuthMiddleware, UserController.update);
+
+
 
 export default routes;
