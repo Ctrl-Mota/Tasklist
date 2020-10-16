@@ -4,7 +4,7 @@ class Task extends Model{
     static init(sequelize){
         super.init({
             task: Sequelize.STRING,
-            chech: Sequelize.BOOLEAN,
+            check: Sequelize.BOOLEAN,
         },{
             sequelize,
         });
